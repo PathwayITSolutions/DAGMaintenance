@@ -17,7 +17,7 @@
         https://www.pathwayit.net
 
     .NOTES
-        Work in Progress, several items in the TODO
+        Work in Progress, items in the TODO
         TODO: Resume-ClusterNode should read the output and act on it
         TODO: Script needs to read which databases belong on ThisServer as primary and move them Get-MailboxDatabase | Select Server, Name, DatabaseCopies,ActivationPreference
     #>

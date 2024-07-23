@@ -17,7 +17,7 @@
         https://www.pathwayit.net
 
     .NOTES
-        Work in Progress, several items in the TODO
+        Work in Progress, items in the TODO
         TODO: Suspend-ClusterNode should read the output and act on it
         TODO: Message-Redirect should read the output and act on it
 #>
