@@ -31,6 +31,16 @@ else {
     exit
 }
 
+if (Get-Module -ListAvailable -Name PSWindowsUpdate) {
+    if ($null -ne Get-WUInstall) {
+        Write-Host -ForegroundColor Red "Patching not completed, running PSWindowsUpdate again. Restart this script once complete..."
+        Get-WUInstall -AcceptAll -AutoReboot -Install
+        exit
+    }
+} else {
+    Write-Host -ForegroundColor Red "Unable to check patch status, check your PSWindowsUpdate installation"
+}
+
 $ThisServer = $env:computername
 
 Write-Host "Setting ServerWideOffline to Active..."
