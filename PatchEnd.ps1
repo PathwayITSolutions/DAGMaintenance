@@ -38,7 +38,8 @@ if (Get-Module -ListAvailable -Name PSWindowsUpdate) {
         Get-WUInstall -AcceptAll -AutoReboot -Install
         exit
     }
-} else {
+}
+else {
     Write-Host -ForegroundColor Red "Unable to check patch status, check your PSWindowsUpdate installation"
 }
 
@@ -112,7 +113,8 @@ While ($TSHCounter -lt 3) {
         Write-Host -ForegroundColor Green "$($TSH[$TSHCounter].Role) OK"
         $TSHCounter++
     }
-    else { 
+    else {
+        $DSTotal = $($TSH[$TSHCounter].ServicesNotRunning).Count
         foreach ($DownService in $TSH[$TSHCounter].ServicesNotRunning) {
             $ServiceState = Get-Service $DownService
             $DSCounter = 0
@@ -126,11 +128,15 @@ While ($TSHCounter -lt 3) {
             }
             if ($ServiceState.Status -eq "Running") {
                 Write-Host "$($DownService) started"
+                $DSTotal--
             }
             else {
                 Write-Host -ForegroundColor Red "$($DownService) failed to start, investigate"
-                Write-Host -ForegroundColor Red "$($TSH[$TSHCounter].Role) Down"
-                $TSHCounter++
+                $DSTotal--
+                if ($DSTotal -eq 0) {
+                    Write-Host -ForegroundColor Red "$($TSH[$TSHCounter].Role) Down"
+                    $TSHCounter++
+                }
             }
         }
     }
