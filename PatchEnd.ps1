@@ -32,7 +32,8 @@ else {
 }
 
 if (Get-Module -ListAvailable -Name PSWindowsUpdate) {
-    if ($null -ne Get-WUInstall) {
+    $PSWUState = Get-WUInstall
+    if ($null -ne $PSWUState) {
         Write-Host -ForegroundColor Red "Patching not completed, running PSWindowsUpdate again. Restart this script once complete..."
         Get-WUInstall -AcceptAll -AutoReboot -Install
         exit
